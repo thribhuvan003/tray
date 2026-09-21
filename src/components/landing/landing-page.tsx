@@ -1,214 +1,54 @@
-import React from "react";
 import Link from "next/link";
 import type { ResolvedTenant } from "@/lib/tenant";
-import { landingFontVars } from "@/components/landing/fonts";
-import { Masthead } from "@/components/landing/masthead";
-import { LandingIntro } from "@/components/landing/intro";
-import { Reveal } from "@/components/landing/reveal";
-import { CouponsSection } from "@/components/landing/sections/CouponsSection";
-import { WalkthroughSection } from "@/components/landing/sections/WalkthroughSection";
-import { LedgerSection } from "@/components/landing/sections/LedgerSection";
-import { CarbonSection } from "@/components/landing/sections/CarbonSection";
-import { BackPageSection } from "@/components/landing/sections/BackPageSection";
-import { QuoteSection } from "@/components/landing/sections/QuoteSection";
+import { Masthead } from "./masthead";
+import { StallDemo } from "./sections/StallDemo";
 import "./ledger.css";
 
-function MealToken({ label }: { label: string }) {
-  return (
-    <aside className="lp-hero-token" aria-label="Sample counter token">
-      <div className="lp-receipt">
-        <div className="lp-receipt-head">
-          <span className="lp-receipt-brand">TRAY</span>
-          <span className="lp-receipt-loc">{label}</span>
-        </div>
-        <div className="lp-receipt-rule" aria-hidden />
-        <div className="lp-receipt-row">
-          <span>Masala Dosa ×1</span>
-          <span>₹70.00</span>
-        </div>
-        <div className="lp-receipt-row">
-          <span>Filter Coffee ×2</span>
-          <span>₹50.00</span>
-        </div>
-        <div className="lp-receipt-rule" aria-hidden />
-        <div className="lp-receipt-row lp-receipt-row--total">
-          <span>TOTAL</span>
-          <span>₹120.00</span>
-        </div>
-        <div className="lp-receipt-pay">
-          <span>Paid to</span>
-          <strong>stall-07@upi</strong>
-        </div>
-        <div className="lp-receipt-token">
-          <span className="lp-receipt-token-label">Show this at the glass</span>
-          <span className="lp-receipt-token-num">217</span>
-        </div>
-        <p className="lp-receipt-foot">thermal sample · not live money</p>
-      </div>
-    </aside>
-  );
-}
+const tools = [
+  { number: "01", title: "A menu in every pocket.", description: "Customers scan your QR, choose their food and place an order on their phone.", href: "/demo/student", label: "Try the customer menu", detail: "FOR YOUR CUSTOMERS" },
+  { number: "02", title: "A little order in the rush.", description: "See incoming orders in one queue. Use the kitchen board when you have someone helping with prep.", href: "/demo/kitchen", label: "Try the kitchen board", detail: "FOR YOUR COUNTER" },
+  { number: "03", title: "Know how the day went.", description: "Manage your menu, update availability and see your orders and sales in one place.", href: "/demo/admin", label: "Try the owner dashboard", detail: "FOR YOU" },
+];
 
-function Hero({ label }: { label: string }) {
-  return (
-    <section id="top" className="lp-hero">
-      <div className="lp-hero-copy">
-        <div className="lp-hero-plate">
-          <span className="lp-hero-plate-l">Street stalls · tiffin · carts</span>
-          <span className="lp-hero-plate-r">India</span>
-        </div>
-
-        <h1 className="lp-h1">
-          <span className="lp-h1-line">Customers scan &amp; pay.</span>
-          <span className="lp-h1-line">Straight to your UPI.</span>
-          <span className="lp-h1-line lp-h1-line--accent">You keep every rupee.</span>
-        </h1>
-
-        <p className="lp-hero-lede">
-          Built for the crush outside a dosa cart — not another delivery app. Money goes phone →
-          your VPA, and Tray never takes a cut of an order.
-        </p>
-
-        <ol className="lp-hero-steps" aria-label="How your customers order">
-          <li>
-            <b>1</b>
-            <span>They scan your QR</span>
-          </li>
-          <li>
-            <b>2</b>
-            <span>They pay your UPI</span>
-          </li>
-          <li>
-            <b>3</b>
-            <span>Token at your counter</span>
-          </li>
-        </ol>
-
-        <div className="lp-hero-actions">
-          <Link href="/get-started" className="lp-cta">
-            Set up my stall
-          </Link>
-          <Link href="/demo/student" className="lp-underline-link">
-            Try the demo — no sign-up
-          </Link>
-        </div>
-        <p className="lp-hero-note">
-          How is it free? Zero commission, ever — paid optional tools come later, never a silent
-          fee on every dosa.
-        </p>
-      </div>
-      <MealToken label={label} />
-    </section>
-  );
-}
-
-function RegisterLine() {
-  const items = [
-    { id: "order", node: <>12:47 — token T-2425 <b>pays ₹120</b></> },
-    { id: "paid", node: <>money lands in the stall&apos;s UPI</> },
-    { id: "token", node: <><b>token shown at the glass</b></> },
-    {
-      id: "collected",
-      node: <span className="lp-register-accent">handed over ✓</span>,
-    },
-    { id: "hisaab", node: <>hisaab updates itself</> },
-  ];
-  const track = [...items, ...items];
-  return (
-    <div className="lp-register" id="order-example" aria-label="Example order timeline">
-      <div className="lp-register-track">
-        {track.map((item, i) => (
-          <span key={`${item.id}-${i}`} className="lp-register-item">
-            {item.node}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Footer({ menuHref }: { menuHref: string }) {
-  return (
-    <footer className="lp-footer">
-      <div className="lp-foot">
-        <div className="lp-foot-row">
-          <div className="lp-foot-lead">
-            <p className="lp-foot-eyebrow">Street edition · India</p>
-            <p className="lp-foot-line-copy">
-              Direct UPI. Phone token. Zero cut.
-              <br />
-              Built for the counter.
-            </p>
-          </div>
-
-          <nav className="lp-foot-chips" aria-label="Footer links">
-            <Link href="/get-started" className="lp-foot-chip lp-foot-chip--hot">
-              Set up my stall
-            </Link>
-            <Link href="/demo/student" className="lp-foot-chip">
-              Try demos
-            </Link>
-            <Link href={menuHref} className="lp-foot-chip lp-foot-chip--ghost">
-              Sample menu
-            </Link>
-            <Link href="/legal/terms" className="lp-foot-chip lp-foot-chip--ghost">
-              Terms
-            </Link>
-            <Link href="/legal/privacy" className="lp-foot-chip lp-foot-chip--ghost">
-              Privacy
-            </Link>
-            <a
-              href="https://github.com/thribhuvan003/trayy"
-              target="_blank"
-              rel="noreferrer"
-              className="lp-foot-chip lp-foot-chip--ghost"
-            >
-              GitHub
-            </a>
-            <Link href="/login" className="lp-foot-chip lp-foot-chip--ghost">
-              Sign in
-            </Link>
-          </nav>
-        </div>
-
-        <div className="lp-foot-end">
-          <p className="lp-foot-meta">© Tray · Street edition</p>
-
-          <div className="lp-foot-stamp" aria-label="Tray brand stamp">
-            <span className="lp-foot-stamp-word">TRAY</span>
-            <span className="lp-foot-stamp-sub">STREET · INDIA</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
+const questions = [
+  { question: "Where does the payment go?", answer: "In direct UPI mode, customers pay your UPI ID. Check the credit in your payment app or bank account before confirming the payment in Tray. A screenshot alone is not proof of payment." },
+  { question: "Does Tray take a cut of each order?", answer: "Tray does not charge an order commission. Any charges from your payment provider are separate." },
+  { question: "Do customers need to install an app?", answer: "No. Your QR opens a web menu on their phone. They can browse and order in the browser." },
+  { question: "Do I need a separate kitchen screen?", answer: "No. A small stall can work from the counter. The kitchen board is there when you want a separate view for the person preparing orders." },
+  { question: "What do I need to get started?", answer: "An account, your stall details, menu and payment setup. Add your items and prices, then share your menu link or display its QR at your stall. You and your customers need an internet connection." },
+];
 
 export function LandingPage({ tenant }: { tenant: ResolvedTenant | null }) {
-  const label = tenant?.college_name?.toUpperCase() ?? "MG ROAD · STALL 7";
-  const menuHref = tenant ? `/c/${tenant.slug}/menu` : "/demo/student";
-
   return (
-    <div className={`lp ${landingFontVars}`}>
-      <LandingIntro />
-      <div className="lp-shell">
-        <Masthead />
-        <main id="main">
-          <Hero label={label} />
-          <Reveal as="div" from="none">
-            <RegisterLine />
-          </Reveal>
-          <CouponsSection />
-          <WalkthroughSection />
-          <LedgerSection />
-          <CarbonSection />
-          <BackPageSection />
-          <QuoteSection />
-        </main>
-        <Reveal as="div" from="up">
-          <Footer menuHref={menuHref} />
-        </Reveal>
-      </div>
+    <div className="lp" id="top">
+      <a className="lp-skip" href="#main">Skip to content</a>
+      <Masthead />
+      <main id="main">
+        <section className="lp-hero lp-container" aria-labelledby="hero-title">
+          <div className="lp-hero-copy">
+            <p className="lp-eyebrow"><span className="lp-dot" aria-hidden="true" /> MADE FOR THE STREET. BUILT FOR YOUR STALL.</p>
+            <h1 id="hero-title">Your food.<br />Your stall.<br /><em>Your own system.</em></h1>
+            <p className="lp-hero-lede">A menu on their phone. Orders at your counter. Payments to your UPI. Tray brings it all together, so you can get on with the cooking.</p>
+            <div className="lp-actions">
+              <Link href="/get-started" className="lp-button">Set up my stall <span aria-hidden="true">↗</span></Link>
+              <a href="#demos" className="lp-text-link">Explore the demos <span aria-hidden="true">↓</span></a>
+            </div>
+            <p className="lp-small-note">No order commission. No app for customers to install.</p>
+          </div>
+          <StallDemo />
+        </section>
+        <div className="lp-caption-band lp-container"><span>From the first chai to the last order.</span><span>Tiffin stalls · Food carts · Small counters</span></div>
+        <section id="demos" className="lp-section lp-container" aria-labelledby="tools-title">
+          <div className="lp-section-heading"><p className="lp-eyebrow">THE WHOLE COUNTER, CONNECTED</p><h2 id="tools-title">Small stall.<br /><em>Everything in place.</em></h2><p>One system for the people ordering, the people cooking, and you. Explore each side with sample data.</p></div>
+          <div className="lp-tools">{tools.map((tool) => <article className="lp-tool" key={tool.number}><span className="lp-tool-number" aria-hidden="true">{tool.number}</span><div><p className="lp-eyebrow">{tool.detail}</p><h3>{tool.title}</h3><p>{tool.description}</p><Link href={tool.href} className="lp-text-link">{tool.label} <span aria-hidden="true">↗</span></Link></div></article>)}</div>
+        </section>
+        <section id="trust" className="lp-questions lp-container" aria-labelledby="questions-title">
+          <div className="lp-section-heading"><p className="lp-eyebrow">BEFORE YOU PUT UP THE QR</p><h2 id="questions-title">Good questions.<br /><em>Straight answers.</em></h2><p>Your stall runs on trust. You should know how the system works.</p></div>
+          <div className="lp-faq">{questions.map(({ question, answer }) => <details key={question}><summary>{question}<span className="lp-faq-plus" aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
+        </section>
+        <section className="lp-closing lp-container" aria-labelledby="closing-title"><p className="lp-eyebrow">YOUR NEXT ORDER STARTS HERE</p><h2 id="closing-title">Make room<br />for <em>what’s cooking.</em></h2><Link href="/get-started" className="lp-button">Set up my stall <span aria-hidden="true">↗</span></Link><p>Add your menu. Set up payments. Put up your QR.</p></section>
+      </main>
+      <footer className="lp-footer lp-container"><div className="lp-footer-top"><a href="#top" className="lp-brand" aria-label="Tray, back to top">tray<span aria-hidden="true">®</span></a><p>A little less managing.<br />A little more making.</p><nav aria-label="Footer"><Link href="/legal/terms">Terms</Link><Link href="/legal/privacy">Privacy</Link><a href="https://github.com/thribhuvan003/tray" target="_blank" rel="noreferrer">GitHub ↗</a><Link href={tenant ? `/c/${tenant.slug}/menu` : "/demo/student"}>Sample menu</Link></nav></div><div className="lp-footer-bottom"><span>Tray · Made for everyday stalls.</span><span className="lp-makers-mark">GOOD FOOD. YOUR RULES.</span><span>Built in India.</span></div></footer>
     </div>
   );
 }
