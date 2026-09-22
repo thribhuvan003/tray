@@ -3,6 +3,8 @@ import { headers } from "next/headers";
 import { safeNext } from "@/lib/auth/safe-redirect";
 import { SmartLoginForm } from "@/components/portal-student/smart-login-form";
 
+import "./login.css";
+
 export const metadata = { title: "Sign in — Tray" };
 
 export default async function LoginPage({
@@ -23,119 +25,75 @@ export default async function LoginPage({
 
   const infoMsg =
     sp.msg === "select-canteen"
-      ? "Signed in! Share your canteen URL with students so they can start ordering."
+      ? "Signed in! Share your stall link with customers so they can start ordering."
       : sp.msg === "already-has-canteen"
-        ? "Your canteen is already set up. Sign in below to reach your dashboard."
+        ? "Your stall is already set up. Sign in to open your dashboard."
         : undefined;
 
   const roleHint =
     sp.role === "owner"
-      ? "Owner · aaj ka hisaab"
+      ? "FOR STALL OWNERS"
       : sp.role === "kitchen"
-        ? "Kitchen · phone + speaker"
-        : "One login · right portal";
+        ? "FOR KITCHEN STAFF"
+        : "YOUR STALL, CONNECTED";
 
   return (
-    <div
-      data-portal="student"
-      className="min-h-screen flex items-center justify-center px-5 py-12"
-      style={{
-        background: "var(--tray-paper, #fdf8f0)",
-        color: "var(--tray-ink, #1a1410)",
-      }}
-    >
-      <div className="w-full max-w-[400px]">
-        <Link href="/" className="inline-flex items-center gap-2.5 mb-10" aria-label="Tray home">
-          <span
-            className="inline-flex h-10 w-10 items-center justify-center rounded-[12px] text-white text-[15px] font-black shrink-0"
-            style={{
-              background: "var(--tray-signal, #d52821)",
-              fontFamily: "var(--font-newsreader), Georgia, serif",
-              fontStyle: "italic",
-              boxShadow: "0 3px 0 #1a1410",
-            }}
-          >
-            T
-          </span>
-          <span
-            style={{
-              fontFamily: "var(--font-newsreader), Georgia, serif",
-              fontWeight: 600,
-              fontSize: "1.55rem",
-              letterSpacing: "-0.03em",
-              color: "var(--tray-ink, #1a1410)",
-            }}
-          >
-            Tray
-            <span style={{ color: "var(--tray-signal, #d52821)", fontStyle: "italic" }}>.</span>
-          </span>
+    <div className="tray-login">
+      <a className="login-skip" href="#login-main">
+        Skip to sign in
+      </a>
+      <header className="login-header">
+        <Link href="/" className="login-brand" aria-label="Tray home">
+          tray<span>.</span>
         </Link>
-
-        <p
-          className="font-mono uppercase mb-2"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.14em",
-            color: "var(--tray-ink-3, #6b5f54)",
-            fontFamily: "var(--font-jetbrains), monospace",
-          }}
-        >
-          {roleHint}
-        </p>
-
-        <h1
-          className="text-[1.75rem] font-semibold tracking-tight mb-1.5 leading-tight"
-          style={{
-            color: "var(--tray-ink, #1a1410)",
-            fontFamily: "var(--font-newsreader), Georgia, serif",
-          }}
-        >
-          Welcome back
-        </h1>
-        <p
-          className="text-[14.5px] mb-8 leading-relaxed"
-          style={{ color: "var(--tray-ink-2, #3d342c)", opacity: 0.85 }}
-        >
-          Sign in once. We send you to kitchen, admin, or menu — no tab dance.
-        </p>
-
-        {(infoMsg || sp.error) && (
-          <div
-            className="mb-6 rounded-xl border px-4 py-3.5 text-[13px] leading-[1.55]"
-            style={
-              sp.error
-                ? {
-                    borderColor: "rgba(213,40,33,0.25)",
-                    background: "rgba(213,40,33,0.06)",
-                    color: "#a31810",
-                  }
-                : {
-                    borderColor: "rgba(27,107,58,0.25)",
-                    background: "rgba(27,107,58,0.06)",
-                    color: "#145230",
-                  }
-            }
-          >
-            {sp.error ?? infoMsg}
+        <Link href="/#demos" className="login-back">
+          Explore the demos <span aria-hidden="true">↗</span>
+        </Link>
+      </header>
+      <main id="login-main" className="login-main">
+        <div className="login-card">
+          <p className="login-eyebrow">{roleHint}</p>
+          <h1>Welcome back.</h1>
+          <p className="login-intro">
+            Sign in to open your menu, kitchen or dashboard.
+          </p>
+          {(infoMsg || sp.error) && (
+            <p
+              className={`login-notice${sp.error ? " login-error" : ""}`}
+              role={sp.error ? "alert" : "status"}
+            >
+              {sp.error ?? infoMsg}
+            </p>
+          )}
+          <SmartLoginForm next={next} slug={slug} hintRole={sp.role} />
+          <p className="login-signup">
+            New to Tray?{" "}
+            <Link
+              href={
+                slug
+                  ? `/signup?tenant=${encodeURIComponent(slug)}`
+                  : "/get-started"
+              }
+            >
+              {slug ? "Create an account" : "Set up your stall"}
+            </Link>
+          </p>
+          <div className="login-demo">
+            <p>Just looking around?</p>
+            <Link href="/#demos">
+              Try Tray with sample data <span aria-hidden="true">→</span>
+            </Link>
+            <span>No account or payment needed.</span>
           </div>
-        )}
-
-        <SmartLoginForm next={next} slug={slug} hintRole={sp.role} />
-
-        <p
-          className="mt-8 text-center text-[12px] leading-relaxed"
-          style={{ color: "var(--tray-ink-3, #6b5f54)" }}
-        >
-          No account?{" "}
-          <Link
-            href={slug ? `/signup?tenant=${slug}` : "/get-started"}
-            className="font-semibold underline underline-offset-2"
-            style={{ color: "var(--tray-signal, #d52821)" }}
-          >
-            Set up or join a stall
-          </Link>
-        </p>
-      </div>
+        </div>
+      </main>
+      <footer className="login-footer">
+        <span>Built for the daily rush.</span>
+        <nav aria-label="Legal">
+          <Link href="/legal/privacy">Privacy</Link>
+          <Link href="/legal/terms">Terms</Link>
+        </nav>
+      </footer>
     </div>
   );
 }

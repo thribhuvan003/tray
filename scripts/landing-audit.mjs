@@ -37,10 +37,8 @@ const SECTIONS = [
   { id: "hero", selector: "#top", label: "00-hero" },
   { id: "demos", selector: "#demos", label: "01-demos" },
   { id: "walkthrough", selector: "#walkthrough", label: "02-walkthrough" },
-  { id: "ledger", selector: "#ledger", label: "03-ledger" },
-  { id: "sync", selector: "#sync", label: "04-sync" },
   { id: "trust", selector: "#trust", label: "05-trust" },
-  { id: "closing", selector: ".lp-band-close", label: "06-closing" },
+  { id: "closing", selector: ".lp-closing", label: "06-closing" },
   { id: "footer", selector: "footer", label: "07-footer" },
 ];
 
@@ -259,26 +257,17 @@ async function testNavScroll(page, dir, isMobile) {
 }
 
 /** @param {import('playwright').Page} page @param {string} dir */
-async function testSyncScrollScrub(page, dir) {
-  const fractions = [
-    ["sync-scrub-00", 0.08],
-    ["sync-scrub-33", 0.38],
-    ["sync-scrub-66", 0.68],
-    ["sync-scrub-100", 0.92],
-  ];
-
-  for (const [name, frac] of fractions) {
-    const y = await page.evaluate((f) => {
-      const el = document.querySelector("#sync");
-      if (!el) return 0;
-      const r = el.getBoundingClientRect();
-      const top = window.scrollY + r.top;
-      const height = r.height;
-      return top + height * f - window.innerHeight * 0.35;
-    }, frac);
-    await page.evaluate((scrollY) => window.scrollTo(0, Math.max(0, scrollY)), y);
-    await page.waitForTimeout(800);
-    await page.screenshot({ path: path.join(dir, `${name}.png`) });
+async function testOrderWalkthrough(page, dir) {
+  const steps = page.getByRole("group", { name: "Explore a sample order" }).getByRole("button");
+  for (let index = 0; index < await steps.count(); index += 1) {
+    await steps.nth(index).click();
+    if (await steps.nth(index).getAttribute("aria-pressed") !== "true") {
+      throw new Error(`Order walkthrough step ${index + 1} did not activate`);
+    }
+    await page.locator("#walkthrough").screenshot({
+      path: path.join(dir, `order-step-${index + 1}.png`),
+      animations: "disabled",
+    });
   }
 }
 
@@ -307,10 +296,10 @@ try {
     const dir = path.join(outDir, vp.name);
     await waitForLanding(page);
     const initialPerformance = await readPerformance(page);
-    const isMobile = vp.width < 720;
+    const isMobile = vp.width <= 900;
     const sectionReport = await captureSections(page, dir);
     const scrollReport = await testNavScroll(page, dir, isMobile);
-    if (vp.name === "desktop") await testSyncScrollScrub(page, dir);
+    await testOrderWalkthrough(page, dir);
     const horizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
     );
