@@ -77,16 +77,13 @@ export function LandingPage({ tenant }: { tenant: ResolvedTenant | null }) {
               STREET. BUILT FOR YOUR STALL.
             </p>
             <h1 id="hero-title">
-              Your food.
+              Take orders.
               <br />
-              Your stall.
-              <br />
-              <em>Your own system.</em>
+              Run your stall.
             </h1>
             <p className="lp-hero-lede">
-              A menu on their phone. Orders at your counter. Payments to your
-              UPI. Tray brings it all together, so you can get on with the
-              cooking.
+              Give customers a QR menu. Manage incoming orders, check UPI
+              payments and keep track of pickups—all from your counter.
             </p>
             <div className="lp-actions">
               <Link href="/get-started" className="lp-button">
@@ -128,9 +125,7 @@ export function LandingPage({ tenant }: { tenant: ResolvedTenant | null }) {
           <div className="lp-section-heading">
             <p className="lp-eyebrow">THREE DEMOS. ONE STALL.</p>
             <h2 id="tools-title">
-              See what
-              <br />
-              <em>each person sees.</em>
+              Try the whole ordering flow.
             </h2>
             <p>
               Open a demo and try the controls. Each view uses sample data, with
@@ -163,9 +158,7 @@ export function LandingPage({ tenant }: { tenant: ResolvedTenant | null }) {
           <div className="lp-section-heading">
             <p className="lp-eyebrow">BEFORE YOU PUT UP THE QR</p>
             <h2 id="questions-title">
-              Good questions.
-              <br />
-              <em>Straight answers.</em>
+              Before you get started.
             </h2>
             <p>
               Your stall runs on trust. You should know how the system works.
@@ -188,9 +181,7 @@ export function LandingPage({ tenant }: { tenant: ResolvedTenant | null }) {
         <section className="lp-closing" aria-labelledby="closing-title">
           <p className="lp-eyebrow">YOUR NEXT ORDER STARTS HERE</p>
           <h2 id="closing-title">
-            Make room
-            <br />
-            for <em>what’s cooking.</em>
+            Start with your menu.
           </h2>
           <Link href="/get-started" className="lp-button">
             Set up my stall <span aria-hidden="true">↗</span>

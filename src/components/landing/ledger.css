@@ -178,19 +178,15 @@
 }
 .lp h1,
 .lp h2 {
-  font-family: var(--serif);
-  font-weight: 500;
-  letter-spacing: -0.055em;
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 .lp h1 {
   margin: 0;
-  font-size: clamp(58px, 6.6vw, 94px);
-  line-height: 0.9;
-}
-.lp h1 em,
-.lp h2 em {
-  color: var(--red);
-  font-weight: 400;
+  font-size: clamp(42px, 4.5vw, 64px);
+  line-height: 1.12;
 }
 .lp-hero-lede {
   max-width: 550px;
@@ -371,8 +367,8 @@
 }
 .lp-ticket-scene h2 {
   margin: 0;
-  font-size: clamp(32px, 4vw, 52px);
-  line-height: 0.95;
+  font-size: clamp(26px, 2.7vw, 36px);
+  line-height: 1.2;
 }
 .lp-ticket-sub {
   margin: 9px 0 22px;
@@ -546,8 +542,9 @@
 .lp-questions h2,
 .lp-closing h2 {
   margin: 0;
-  font-size: clamp(50px, 7vw, 94px);
-  line-height: 0.9;
+  max-width: 20ch;
+  font-size: clamp(32px, 3.5vw, 48px);
+  line-height: 1.15;
 }
 .lp-section-heading > p:last-child {
   max-width: 510px;
@@ -568,7 +565,7 @@
   border-bottom: 1px solid var(--line);
 }
 .lp-tool-number {
-  font: 500 42px/1 var(--serif);
+  font: 600 24px/1.2 var(--sans);
   color: var(--red);
 }
 .lp-tool > div {
@@ -594,8 +591,8 @@
 }
 .lp-tool h3 {
   margin: 0;
-  font: 500 clamp(27px, 3.2vw, 43px)/1.05 var(--serif);
-  letter-spacing: -0.035em;
+  font: 700 clamp(23px, 2.2vw, 30px)/1.25 var(--sans);
+  letter-spacing: -0.025em;
 }
 .lp-tool p {
   margin: 0;
@@ -630,10 +627,7 @@
 }
 .lp-questions h2 {
   color: white;
-  font-size: clamp(48px, 6vw, 82px);
-}
-.lp-questions h2 em {
-  color: #ef8876;
+  font-size: clamp(32px, 3.5vw, 48px);
 }
 .lp-questions .lp-section-heading > p:last-child {
   color: #aea79e;
@@ -652,7 +646,7 @@
   justify-content: space-between;
   gap: 20px;
   cursor: pointer;
-  font: 500 clamp(20px, 2.3vw, 30px)/1.2 var(--serif);
+  font: 600 18px/1.5 var(--sans);
 }
 .lp-faq summary::-webkit-details-marker {
   display: none;
@@ -688,10 +682,7 @@
   max-width: 900px;
   margin-inline: auto;
   color: white;
-  font-size: clamp(58px, 9vw, 125px);
-}
-.lp-closing h2 em {
-  color: var(--yellow);
+  font-size: clamp(36px, 4.5vw, 60px);
 }
 .lp-closing .lp-button {
   margin-top: 43px;
@@ -721,7 +712,7 @@
 }
 .lp-footer-top > p {
   margin: 0;
-  font: 500 26px/1.2 var(--serif);
+  font: 500 18px/1.5 var(--sans);
 }
 .lp-footer nav {
   justify-self: end;
@@ -801,7 +792,7 @@
     gap: 54px;
   }
   .lp h1 {
-    font-size: clamp(54px, 17vw, 76px);
+    font-size: clamp(36px, 8.5vw, 48px);
   }
   .lp-hero-lede {
     margin-top: 25px;
@@ -841,7 +832,7 @@
     min-height: 430px;
   }
   .lp-ticket-scene h2 {
-    font-size: 34px;
+    font-size: 27px;
   }
   .lp-payment-amount {
     font-size: 78px;
@@ -866,7 +857,7 @@
   }
   .lp-section-heading h2,
   .lp-questions h2 {
-    font-size: 50px;
+    font-size: 32px;
   }
   .lp-tools {
     margin-top: 48px;
@@ -883,7 +874,7 @@
     display: block;
   }
   .lp-tool h3 {
-    font-size: 29px;
+    font-size: 24px;
   }
   .lp-tool p {
     margin-top: 13px;
@@ -900,10 +891,10 @@
   }
   .lp-faq summary {
     min-height: 74px;
-    font-size: 21px;
+    font-size: 17px;
   }
   .lp-closing h2 {
-    font-size: clamp(56px, 17vw, 82px);
+    font-size: 36px;
   }
   .lp-footer-top {
     grid-template-columns: 1fr;
@@ -926,7 +917,7 @@
     width: min(100% - 22px, 1180px);
   }
   .lp h1 {
-    font-size: 50px;
+    font-size: 34px;
   }
   .lp-ticket {
     min-height: 445px;
